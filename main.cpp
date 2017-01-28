@@ -3,6 +3,6 @@
 
 int main()
 {
- 	std::cout << "hello";
+ 	Expr* e = new And_Expr->Eval(new Not_Expr(new True_Expr.Eval();),new False_Expr.Eval(););
 	return 0;
 }

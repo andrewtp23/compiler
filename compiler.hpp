@@ -5,19 +5,29 @@ struct Expr {
   virtual ~Expr(){};
   virtual int weight() = 0;
   virtual int height() = 0;
-  virtual bool Eval() = 0;
-
-};
-
-struct True_Expr : Expr{
-    int weight()  {return 1;};
-    bool Eval()  {return true;};
+  virtual bool Eval();
 };
 
 struct False_Expr : Expr{
     int weight()  {return 1;};
-    bool Eval()  {return false;};
+    int height() {return 0;};
+    bool value = false;
+    bool Eval()  {return value;};
 };
+
+struct True_Expr : Expr{
+    int weight()  {return 1;};
+    int height() {return 0;};
+    bool value = true;
+    bool Eval()  {return value;};
+};
+
+// struct Bool_Expr : Expr{
+//     int weight()  {return 1;};
+//     int height() {return 0;};
+//     bool value;
+//     bool Eval()  {return value;};
+// };
 
 struct Not_Expr : Expr{
     Expr* e;
