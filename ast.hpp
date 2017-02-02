@@ -1,5 +1,5 @@
-#ifndef compiler_hpp
-#define compiler_hpp
+#ifndef ast_hpp
+#define ast_hpp
 
 struct Expr {
   virtual ~Expr(){};
