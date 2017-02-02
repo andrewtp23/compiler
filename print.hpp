@@ -1,10 +1,7 @@
-
 #include "ast.hpp"
-
 #include <iostream>
 
-bool
-needs_parens(Expr* e)
+bool needs_parens(Expr* e)
 {
   struct V : Expr::Visitor {
     bool r;
@@ -19,8 +16,7 @@ needs_parens(Expr* e)
 }
 
 
-void
-print(Expr* e)
+void print(Expr* e)
 {
   struct V : Expr::Visitor {
     void print_enclosed(Expr* e) {

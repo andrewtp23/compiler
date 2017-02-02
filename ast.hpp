@@ -1,4 +1,3 @@
-
 #ifndef ast_HPP
 #define ast_HPP
 
@@ -14,7 +13,7 @@ struct Not_expr;
 
 struct Type {
   struct Visitor;
-  virtual ~Type() = default;
+  virtual ~Type() {};
   virtual void accept(Visitor&) { }
 };
 
@@ -24,7 +23,7 @@ struct Int_type : Type { };
 
 struct Expr {
   struct Visitor;
-  virtual ~Expr() = default;
+  virtual ~Expr() {};
   virtual void accept(Visitor&) = 0;
 };
 
@@ -38,7 +37,7 @@ struct Expr::Visitor
 
 struct Bool_expr : Expr {
   bool val;
-  Bool_expr(bool b) : val(b) { }
+  Bool_expr(bool b) : val(b) {}
   void accept(Visitor& v) { return v.visit(this); }
 };
 
@@ -65,13 +64,11 @@ struct Not_expr : Expr {
   void accept(Visitor& v) { return v.visit(this); }
 };
 
-
 class Context
 {
  public:
   Bool_type bool_type;
   Int_type int_type;
 };
-
 
 #endif

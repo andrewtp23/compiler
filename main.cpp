@@ -1,10 +1,8 @@
-
 #include <iostream>
 
 #include "ast.hpp"
 #include "eval.hpp"
 #include "print.hpp"
-#include "check.hpp"
 
 int 
 main() {
@@ -17,7 +15,6 @@ main() {
         ),
         new Bool_expr(true)
       );
-    assert(check(cxt, e));
     print(e);
     std::cout << " == " << eval(e) << '\n';
   }
@@ -29,8 +26,7 @@ main() {
           new Bool_expr(true),
           new Bool_expr(false)
         )
-      );
-    assert(check(cxt, e));
+      );  
     print(e);
     std::cout << " == " << eval(e) << '\n';
   }
