@@ -1,10 +1,37 @@
+
 #include <iostream>
-#include "compiler.hpp"
 
-int main()
-{
- Expr* e = new And_Expr(new Not_Expr(new Bool_Expr(true)), new Bool_Expr(false));
- std::cout << e << std::endl;
+#include "ast.hpp"
+#include "eval.hpp"
+#include "print.hpp"
+#include "check.hpp"
 
-	return 0;
+int 
+main() {
+  Context cxt;
+  {
+    Expr* e = 
+      new Or_expr(
+        new Not_expr(
+          new Bool_expr(true)
+        ),
+        new Bool_expr(true)
+      );
+    assert(check(cxt, e));
+    print(e);
+    std::cout << " == " << eval(e) << '\n';
+  }
+
+  {
+    Expr* e = 
+      new Not_expr(
+        new Or_expr(
+          new Bool_expr(true),
+          new Bool_expr(false)
+        )
+      );
+    assert(check(cxt, e));
+    print(e);
+    std::cout << " == " << eval(e) << '\n';
+  }
 }
