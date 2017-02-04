@@ -3,8 +3,7 @@
 
 #include <iostream>
 
-Type*
-check(Context& cxt, Expr* e)
+Type* check(Context& cxt, Expr* e)
 {
   struct V : Expr::Visitor {
     Context& cxt;
@@ -14,18 +13,27 @@ check(Context& cxt, Expr* e)
       r = &cxt.bool_type;
     }
     void visit(And_expr* e) { 
-      // check that e->e1 is bool
-      // check that e->e2 is bool
-      r = &cxt.bool_type;
+	visit(e->e1);
+	visit(e->e2);
+      if(e->e1.r == bool_type && e->e2.r == bool_type)
+         r = &cxt.bool_type;
+      else
+	 std::cout << "Error";
     }
     void visit(Or_expr* e) { 
-      // check that e->e1 is bool
-      // check that e->e2 is bool
-      r = &cxt.bool_type;
+    	visit(e->e1);
+	visit(e->e2);
+      if(e->e1.r == bool_type && e->e2.r == bool_type)
+         r = &cxt.bool_type;
+      else
+	 std::cout << "Error";
     }
     void visit(Not_expr* e) { 
-      // check that e->e1 is bool
+      visit(e->e1);
+      if(e->e1.r == bool_type)
       r = &cxt.bool_type;
+      else
+	std::cout << "Error";
     }
   };
   V vis(cxt);
