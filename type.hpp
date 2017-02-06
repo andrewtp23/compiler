@@ -80,6 +80,10 @@ Type* check(Context& cxt, Expr* e)
       if(check(cxt,e->e1) == &cxt.int_type)
       r = &cxt.int_type;
     }
+    void visit(Ae_expr* e) {
+      if(check(cxt, e->e1) == check(cxt, e->e2) )
+         r = &cxt.bool_type;
+    }
   };
   V vis(cxt);
   e->accept(vis);

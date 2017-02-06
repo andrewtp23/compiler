@@ -21,7 +21,7 @@ int weight(Expr* e)
 	void visit(Div_expr* e) { r = 1 + weight(e->e1) + weight(e->e2); }
 	void visit(Mod_expr* e) { r = 1 + weight(e->e1) + weight(e->e2); }
   void visit(Neg_expr* e) { r = 1 + weight(e->e1); }
-
+	void visit(Ae_expr* e) { r = 1 + weight(e->e1) + weight(e->e2); }
   };
   V vis;
   e->accept(vis);

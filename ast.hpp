@@ -23,6 +23,8 @@ struct Mul_expr;
 struct Div_expr;
 struct Mod_expr;
 struct Neg_expr;
+struct Ae_expr;
+
 
 struct Type {
   struct Visitor;
@@ -58,6 +60,7 @@ struct Expr::Visitor
   virtual void visit(Div_expr*) = 0;
   virtual void visit(Mod_expr*) = 0;
   virtual void visit(Neg_expr*) = 0;
+  virtual void visit(Ae_expr*) = 0;
 };
 
 struct Bool_expr : Expr {
@@ -188,6 +191,14 @@ struct Neg_expr : Expr {
   public:
   Neg_expr(Expr* e1) : e1(e1) { }
   void accept(Visitor& v) {return v.visit(this); }
+};
+
+struct Ae_expr : Expr { //and else
+  Expr* e1; // Don't touch this
+  Expr* e2; // Don't touch this
+  public:
+  Ae_expr(Expr* e1, Expr* e2) : e1(e1), e2(e2) { }
+  void accept(Visitor& v) { return v.visit(this); }
 };
 
 struct Context
