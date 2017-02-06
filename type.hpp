@@ -46,6 +46,10 @@ Type* check(Context& cxt, Expr* e)
       if(check(cxt, e->e1) == check(cxt, e->e2) )
          r = &cxt.bool_type;
     }
+    void visit(Neq_expr* e) {
+      if(check(cxt, e->e1) == check(cxt, e->e2) )
+         r = &cxt.bool_type;
+    }
     void visit(Int_expr* e) {
       r = &cxt.int_type;
     }
@@ -71,6 +75,10 @@ Type* check(Context& cxt, Expr* e)
     void visit(Mod_expr* e) {
       if(check(cxt, e->e1) == &cxt.int_type && check(cxt,e->e2) == &cxt.int_type)
          r = &cxt.int_type;
+    }
+    void visit(Neg_expr* e) {
+      if(check(cxt,e->e1) == &cxt.int_type)
+      r = &cxt.int_type;
     }
   };
   V vis(cxt);

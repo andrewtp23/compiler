@@ -13,12 +13,14 @@ int weight(Expr* e)
   void visit(Grq_expr* e) { r = 1 + weight(e->e1) + weight(e->e2); }
   void visit(Leq_expr* e) { r = 1 + weight(e->e1) + weight(e->e2); }
   void visit(Eql_expr* e) { r = 1 + weight(e->e1) + weight(e->e2); }
+  void visit(Neq_expr* e) { r = 1 + weight(e->e1) + weight(e->e2); }
 	void visit(Int_expr* e) { r = 1; }
 	void visit(Add_expr* e) { r = 1 + weight(e->e1) + weight(e->e2); }
 	void visit(Sub_expr* e) { r = 1 + weight(e->e1) + weight(e->e2); }
 	void visit(Mul_expr* e) { r = 1 + weight(e->e1) + weight(e->e2); }
 	void visit(Div_expr* e) { r = 1 + weight(e->e1) + weight(e->e2); }
 	void visit(Mod_expr* e) { r = 1 + weight(e->e1) + weight(e->e2); }
+  void visit(Neg_expr* e) { r = 1 + weight(e->e1); }
 
   };
   V vis;

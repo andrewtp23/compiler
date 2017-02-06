@@ -15,12 +15,14 @@ struct Lss_expr;
 struct Grq_expr;
 struct Leq_expr;
 struct Eql_expr;
+struct Neq_expr;
 struct Int_expr;
 struct Add_expr;
 struct Sub_expr;
 struct Mul_expr;
 struct Div_expr;
 struct Mod_expr;
+struct Neg_expr;
 
 struct Type {
   struct Visitor;
@@ -48,12 +50,14 @@ struct Expr::Visitor
   virtual void visit(Grq_expr*) = 0;
   virtual void visit(Leq_expr*) = 0;
   virtual void visit(Eql_expr*) = 0;
+  virtual void visit(Neq_expr*) = 0;
   virtual void visit(Int_expr*) = 0;
   virtual void visit(Add_expr*) = 0;
   virtual void visit(Sub_expr*) = 0;
   virtual void visit(Mul_expr*) = 0;
   virtual void visit(Div_expr*) = 0;
   virtual void visit(Mod_expr*) = 0;
+  virtual void visit(Neg_expr*) = 0;
 };
 
 struct Bool_expr : Expr {
@@ -125,6 +129,14 @@ struct Eql_expr : Expr { //eql
   void accept(Visitor& v) { return v.visit(this); }
 };
 
+struct Neq_expr : Expr { //not eql also xor
+  Expr* e1; // Don't touch this
+  Expr* e2; // Don't touch this
+  public:
+  Neq_expr(Expr* e1, Expr* e2) : e1(e1), e2(e2) { }
+  void accept(Visitor& v) { return v.visit(this); }
+};
+
 struct Int_expr : Expr {
   int val;//Don't touch this
   Int_expr(int b) : val(b) {}
@@ -168,6 +180,13 @@ struct Mod_expr : Expr {
   Expr* e2; //Don't touch this
   public:
   Mod_expr(Expr* e1, Expr* e2) : e1(e1), e2(e2) { }
+  void accept(Visitor& v) {return v.visit(this); }
+};
+
+struct Neg_expr : Expr {
+  Expr* e1; //Don't touch this. I know you wanted to.
+  public:
+  Neg_expr(Expr* e1) : e1(e1) { }
   void accept(Visitor& v) {return v.visit(this); }
 };
 

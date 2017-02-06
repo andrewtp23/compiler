@@ -14,12 +14,14 @@ bool needs_parens(Expr* e)
     void visit(Grq_expr* e) { r = true; }
     void visit(Leq_expr* e) { r = true; }
     void visit(Eql_expr* e) { r = true; }
+    void visit(Neq_expr* e) { r = true; }
     void visit(Int_expr* e) { r = false; }
     void visit(Add_expr* e) { r = true; }
     void visit(Sub_expr* e) { r = true; }
     void visit(Mul_expr* e) { r = true; }
     void visit(Div_expr* e) { r = true; }
     void visit(Mod_expr* e) { r = true; }
+    void visit(Neg_expr* e) { r = false; }
   };
   V vis;
   e->accept(vis);
@@ -85,6 +87,11 @@ void print(Expr* e)
       std::cout << " == ";
       print_enclosed(e->e2);
     }
+    void visit(Neq_expr* e) {
+      print_enclosed(e->e1);
+      std::cout << " != ";
+      print_enclosed(e->e2);
+    }
     void visit(Int_expr* e) {
       std::cout << e->val;
     }
@@ -112,6 +119,10 @@ void print(Expr* e)
       print_enclosed(e->e1);
       std::cout << " % ";
       print_enclosed(e->e2);
+    }
+    void visit(Neg_expr* e) {
+      std::cout << " -";
+      print_enclosed(e->e1);
     }
   };
   V vis;
