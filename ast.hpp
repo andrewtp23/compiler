@@ -10,6 +10,11 @@ struct Bool_expr;
 struct And_expr;
 struct Or_expr;
 struct Not_expr;
+struct Gtr_expr;
+struct Lss_expr;
+struct Grq_expr;
+struct Leq_expr;
+struct Eql_expr;
 struct Int_expr;
 struct Add_expr;
 struct Sub_expr;
@@ -26,7 +31,6 @@ struct Type {
 struct Bool_type : Type { };
 struct Int_type : Type { };
 
-
 struct Expr {
   struct Visitor;
   virtual ~Expr() {};
@@ -39,6 +43,11 @@ struct Expr::Visitor
   virtual void visit(And_expr*) = 0;
   virtual void visit(Or_expr*) = 0;
   virtual void visit(Not_expr*) = 0;
+  virtual void visit(Gtr_expr*) = 0;
+  virtual void visit(Lss_expr*) = 0;
+  virtual void visit(Grq_expr*) = 0;
+  virtual void visit(Leq_expr*) = 0;
+  virtual void visit(Eql_expr*) = 0;
   virtual void visit(Int_expr*) = 0;
   virtual void visit(Add_expr*) = 0;
   virtual void visit(Sub_expr*) = 0;
@@ -71,8 +80,48 @@ struct Or_expr : Expr {
 
 struct Not_expr : Expr {
   Expr* e1; //Don't touch this
-  public: 
+  public:
   Not_expr(Expr* e1) : e1(e1) { }
+  void accept(Visitor& v) { return v.visit(this); }
+};
+
+struct Gtr_expr : Expr { //greater than
+  Expr* e1; // Don't touch this
+  Expr* e2; // Don't touch this
+  public:
+  Gtr_expr(Expr* e1, Expr* e2) : e1(e1), e2(e2) { }
+  void accept(Visitor& v) { return v.visit(this); }
+};
+
+struct Lss_expr : Expr { //lessthan
+  Expr* e1; // Don't touch this
+  Expr* e2; // Don't touch this
+  public:
+  Lss_expr(Expr* e1, Expr* e2) : e1(e1), e2(e2) { }
+  void accept(Visitor& v) { return v.visit(this); }
+};
+
+struct Grq_expr : Expr { //greater or equal
+  Expr* e1; // Don't touch this
+  Expr* e2; // Don't touch this
+  public:
+  Grq_expr(Expr* e1, Expr* e2) : e1(e1), e2(e2) { }
+  void accept(Visitor& v) { return v.visit(this); }
+};
+
+struct Leq_expr : Expr { //lessthan or equal
+  Expr* e1; // Don't touch this
+  Expr* e2; // Don't touch this
+  public:
+  Leq_expr(Expr* e1, Expr* e2) : e1(e1), e2(e2) { }
+  void accept(Visitor& v) { return v.visit(this); }
+};
+
+struct Eql_expr : Expr { //eql
+  Expr* e1; // Don't touch this
+  Expr* e2; // Don't touch this
+  public:
+  Eql_expr(Expr* e1, Expr* e2) : e1(e1), e2(e2) { }
   void accept(Visitor& v) { return v.visit(this); }
 };
 
@@ -106,7 +155,6 @@ struct Mul_expr : Expr {
   void accept(Visitor& v) {return v.visit(this); }
 };
 
-
 struct Div_expr : Expr {
   Expr* e1; //Don't touch this. I know you wanted to.
   Expr* e2; //Don't touch this
@@ -114,7 +162,6 @@ struct Div_expr : Expr {
   Div_expr(Expr* e1, Expr* e2) : e1(e1), e2(e2) { }
   void accept(Visitor& v) {return v.visit(this); }
 };
-
 
 struct Mod_expr : Expr {
   Expr* e1; //Don't touch this. I know you wanted to.

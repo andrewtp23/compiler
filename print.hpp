@@ -9,6 +9,11 @@ bool needs_parens(Expr* e)
     void visit(And_expr* e) { r = true; }
     void visit(Or_expr* e) { r = true; }
     void visit(Not_expr* e) { r = true; }
+    void visit(Gtr_expr* e) { r = true; }
+    void visit(Lss_expr* e) { r = true; }
+    void visit(Grq_expr* e) { r = true; }
+    void visit(Leq_expr* e) { r = true; }
+    void visit(Eql_expr* e) { r = true; }
     void visit(Int_expr* e) { r = false; }
     void visit(Add_expr* e) { r = true; }
     void visit(Sub_expr* e) { r = true; }
@@ -35,50 +40,75 @@ void print(Expr* e)
       }
     }
 
-    void visit(Bool_expr* e) { 
+    void visit(Bool_expr* e) {
       if (e->val)
         std::cout << "true";
       else
         std::cout << "false";
     }
-    void visit(And_expr* e) { 
+    void visit(And_expr* e) {
       print_enclosed(e->e1);
       std::cout << " & ";
       print_enclosed(e->e2);
     }
-    void visit(Or_expr* e) { 
+    void visit(Or_expr* e) {
       print_enclosed(e->e1);
       std::cout << " | ";
       print_enclosed(e->e2);
     }
-    void visit(Not_expr* e) { 
+    void visit(Not_expr* e) {
       std::cout << '!';
       print_enclosed(e->e1);
+    }
+    void visit(Gtr_expr* e) {
+      print_enclosed(e->e1);
+      std::cout << " > ";
+      print_enclosed(e->e2);
+    }
+    void visit(Lss_expr* e) {
+      print_enclosed(e->e1);
+      std::cout << " < ";
+      print_enclosed(e->e2);
+    }
+    void visit(Grq_expr* e) {
+      print_enclosed(e->e1);
+      std::cout << " >= ";
+      print_enclosed(e->e2);
+    }
+    void visit(Leq_expr* e) {
+      print_enclosed(e->e1);
+      std::cout << " <= ";
+      print_enclosed(e->e2);
+    }
+    void visit(Eql_expr* e) {
+      print_enclosed(e->e1);
+      std::cout << " == ";
+      print_enclosed(e->e2);
     }
     void visit(Int_expr* e) {
       std::cout << e->val;
     }
-    void visit(Add_expr* e) { 
+    void visit(Add_expr* e) {
       print_enclosed(e->e1);
       std::cout << " + ";
       print_enclosed(e->e2);
     }
-    void visit(Sub_expr* e) { 
+    void visit(Sub_expr* e) {
       print_enclosed(e->e1);
       std::cout << " - ";
       print_enclosed(e->e2);
     }
-    void visit(Mul_expr* e) { 
+    void visit(Mul_expr* e) {
       print_enclosed(e->e1);
       std::cout << " * ";
       print_enclosed(e->e2);
     }
-    void visit(Div_expr* e) { 
+    void visit(Div_expr* e) {
       print_enclosed(e->e1);
       std::cout << " / ";
       print_enclosed(e->e2);
     }
-    void visit(Mod_expr* e) { 
+    void visit(Mod_expr* e) {
       print_enclosed(e->e1);
       std::cout << " % ";
       print_enclosed(e->e2);
