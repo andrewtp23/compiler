@@ -9,12 +9,17 @@ bool needs_parens(Expr* e)
     void visit(And_expr* e) { r = true; }
     void visit(Or_expr* e) { r = true; }
     void visit(Not_expr* e) { r = true; }
+    void visit(Int_expr* e) { r = false; }
+    void visit(Add_expr* e) { r = true; }
+    void visit(Sub_expr* e) { r = true; }
+    void visit(Mul_expr* e) { r = true; }
+    void visit(Div_expr* e) { r = true; }
+    void visit(Mod_expr* e) { r = true; }
   };
   V vis;
   e->accept(vis);
   return vis.r;
 }
-
 
 void print(Expr* e)
 {
@@ -49,6 +54,34 @@ void print(Expr* e)
     void visit(Not_expr* e) { 
       std::cout << '!';
       print_enclosed(e->e1);
+    }
+    void visit(Int_expr* e) {
+      std::cout << e->val;
+    }
+    void visit(Add_expr* e) { 
+      print_enclosed(e->e1);
+      std::cout << " + ";
+      print_enclosed(e->e2);
+    }
+    void visit(Sub_expr* e) { 
+      print_enclosed(e->e1);
+      std::cout << " - ";
+      print_enclosed(e->e2);
+    }
+    void visit(Mul_expr* e) { 
+      print_enclosed(e->e1);
+      std::cout << " * ";
+      print_enclosed(e->e2);
+    }
+    void visit(Div_expr* e) { 
+      print_enclosed(e->e1);
+      std::cout << " / ";
+      print_enclosed(e->e2);
+    }
+    void visit(Mod_expr* e) { 
+      print_enclosed(e->e1);
+      std::cout << " % ";
+      print_enclosed(e->e2);
     }
   };
   V vis;

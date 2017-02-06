@@ -5,6 +5,7 @@
 #include "print.hpp"
 #include "weight.hpp"
 #include "height.hpp"
+//#include "type.hpp"
 
 int 
 main() {
@@ -41,4 +42,12 @@ main() {
 		new Not_expr(new Bool_expr(true));
   
    std::cout << "weight" << " == " << weight(e) << '\n';}
+ {
+   Expr* e =
+     new Int_expr(5);
+	print(e);
+	std::cout << " == " << eval(e) << '\n';
+	std::cout << "weight" << " == " << weight(e) << '\n';
+	std::cout << "height" << " == " << height(e) << '\n';
+ }
 }
