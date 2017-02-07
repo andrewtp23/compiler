@@ -27,6 +27,12 @@ int eval(Expr* e)
         else
           r = false;
     }
+    void visit(Oe_expr* e) {
+	if( eval(e->e1) == true)
+	  r = true;
+	else
+	  r = eval(e->e2);
+	}
     void visit(Cond_expr* e) {
 	if( eval(e->e1) == true)
 		r = eval(e->e2);

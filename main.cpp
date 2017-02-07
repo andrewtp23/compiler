@@ -12,7 +12,7 @@ main() {
   Context cxt;
   {
     Expr* e =
-      new Ae_expr(
+      new And_expr(
         new Not_expr(
           new Bool_expr(true)
         ),
@@ -45,7 +45,7 @@ main() {
    std::cout << "weight" << " == " << weight(e) << '\n';}
  {
    Expr* e =
-     new Eql_expr(new Sub_expr(new Mul_expr(new Int_expr(2), new Int_expr(2)), new Int_expr(1)), new Int_expr(2));
+     new Add_expr(new Sub_expr(new Mul_expr(new Int_expr(2), new Int_expr(2)), new Int_expr(1)), new Int_expr(2));
 	print(e);
 	std::cout << " = " << eval(e) << '\n';
 	std::cout << "weight" << " == " << weight(e) << '\n';

@@ -22,6 +22,7 @@ int height(Expr* e)
 	void visit(Mod_expr* e) { r = 1 + height(e->e1) + height(e->e2); }
 	void visit(Neg_expr* e) { r = 1 + height(e->e1); }
   void visit(Ae_expr* e) { r = 1 + height(e->e1) + height(e->e2); }
+  void visit(Oe_expr* e) { r = 1 + height(e->e1) + height(e->e2); }
   void visit(Cond_expr* e) { r = 1 + height(e->e1) + height(e->e2) + height(e->e3); }
   };
 

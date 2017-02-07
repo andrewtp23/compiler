@@ -23,6 +23,7 @@ bool needs_parens(Expr* e)
     void visit(Mod_expr* e) { r = true; }
     void visit(Neg_expr* e) { r = false; }
     void visit(Ae_expr* e) { r = true; }
+    void visit(Oe_expr* e) { r = true; }
     void visit(Cond_expr* e) { r = true; }
   };
   V vis;
@@ -129,6 +130,11 @@ void print(Expr* e)
     void visit(Ae_expr* e) {
       print_enclosed(e->e1);
       std::cout << " && ";
+      print_enclosed(e->e2);
+    }
+    void visit(Oe_expr* e) {
+      print_enclosed(e->e1);
+      std::cout << " || ";
       print_enclosed(e->e2);
     }
     void visit(Cond_expr* e) {

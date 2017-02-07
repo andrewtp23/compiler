@@ -84,6 +84,10 @@ Type* check(Context& cxt, Expr* e)
       if(check(cxt, e->e1) == check(cxt, e->e2) )
          r = &cxt.bool_type;
     }
+    void visit(Oe_expr* e) {
+      if(check(cxt, e->e1) == check(cxt, e->e2) )
+         r = &cxt.bool_type;
+    }
     void visit(Cond_expr* e) {
       if(check(cxt, e->e1) == check(cxt, e->e2) && check(cxt, e->e2) == check(cxt, e->e3) )
 	r = &cxt.bool_type;
