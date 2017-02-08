@@ -40,6 +40,7 @@ struct Expr {
   struct Visitor;
   virtual ~Expr() {};
   virtual void accept(Visitor&) = 0;
+  Type* Ty;
 };
 
 struct Expr::Visitor

@@ -1,5 +1,6 @@
 #include "ast.hpp"
 
+
 int eval(Expr* e)
 {
   struct V : Expr::Visitor {
@@ -21,18 +22,8 @@ int eval(Expr* e)
     void visit(Div_expr* e) { r = eval(e->e1) / eval(e->e2); }
     void visit(Mod_expr* e) { r = eval(e->e1) % eval(e->e2); }
     void visit(Neg_expr* e) { r = 0 - eval(e->e1) ; }
-    void visit(Ae_expr* e) {
-        if( eval(e->e1) == true)
-          r = eval(e->e2);
-        else
-          r = false;
-    }
-    void visit(Oe_expr* e) {
-	if( eval(e->e1) == true)
-	  r = true;
-	else
-	  r = eval(e->e2);
-	}
+    void visit(Ae_expr* e) { r = eval(e->e1) && eval(e->e2); }
+    void visit(Oe_expr* e) { r = eval(e->e1) || eval(e->e2); }
     void visit(Cond_expr* e) {
 	if( eval(e->e1) == true)
 		r = eval(e->e2);
