@@ -9,6 +9,7 @@
 
 int
 main() {
+try{
   Context cxt;
   {
     Expr* e =
@@ -60,4 +61,8 @@ main() {
 	std::cout << "weight" << " == " << weight(e) << '\n';
 	std::cout << "height" << " == " << height(e) << '\n';
  }
+}catch(char const* err) {
+		std::cout << "The compiler threw an exception:\n"
+			<< err << std::endl;
+	}
 }
