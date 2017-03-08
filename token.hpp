@@ -1,3 +1,5 @@
+
+
 struct Token{
   int name;
 };
@@ -7,7 +9,7 @@ struct Punctuator : Token {
   Integer : Token { int val; }
 };
 
-Enum Token.name {
+enum Token.name {
 
   LPara_Tok;
   RPara_Tok;
@@ -23,6 +25,7 @@ Enum Token.name {
   Gte_Tok;
   Lse_Tok;
   Eql_Tok;
+  
   Percent_Tok; //Modulus
   
 }
