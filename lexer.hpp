@@ -1,15 +1,16 @@
+#include "token.hpp"
 #include <string>
 #include <cstring>
-#include "token.hpp"
+
 #include <iostream>
 
-struct Lexer{
+struct lexer{
   
   const char* first;
   const char* last;
   std::string buf;
   
-  Lexer(char* line) : first(line), last(&line[std::strlen(line)]) { }
+  lexer(char* line) : first(line), last(&line[std::strlen(line)]) { }
   
   bool eof() const { return first == last; };
   
@@ -19,7 +20,7 @@ struct Lexer{
 	return 0;
   else
 	return *first;
-  }
+  };
 
   void consume() {
 
@@ -41,6 +42,9 @@ struct Lexer{
   buf.clear();
   //std::isnewspace(lookahead());
   switch(lookahead()){
+	case '#' :
+		first == last;
+		break;
 	case '(' : 
 	  {
 	  consume();
@@ -69,6 +73,11 @@ struct Lexer{
 	case '/' :
 	  {
 	  consume();
+		if(lookahead() == '/'){
+			first == last;
+			break;
+			}
+	  else
 	  return new Punctuator_Tok(Slash_Tok);
 	  }
 	case '|' :
@@ -174,8 +183,8 @@ struct Lexer{
 		std::cout << "Error" << std::endl;
 	 }
 	
-	case 'f' :
-	  {
+	/case 'f' :
+	{
 	  consume();
 	  if(lookahead() == 'a'){
 		consume();
@@ -186,21 +195,19 @@ struct Lexer{
 				if(lookahead() == 'e'){
 					consume();
 					return new Bool_Tok(0);
-					}
+				}
 				else
 					std::cout << "Error" << std::endl;
 			}
 			else
 				std::cout << "Error" << std::endl;
-		}
+			}
 		else
 			std::cout << "Error" << std::endl;
-	  }
+		}
 	  else
 		std::cout << "Error" << std::endl;
-	}
-	
-  
-};
+	 }
+}
 
 
