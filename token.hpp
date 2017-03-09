@@ -9,6 +9,15 @@ struct Punctuator : Token {
   Integer : Token { int val; }
 };
 
+struct Int_Tok{
+	int value;
+	Int_Tok(int tok, int n) : value(n), name(Int_Tok) { }
+};
+
+struct Bool_Tok{
+	bool value;
+	Bool_Tok(int tok, int n) : value(n), name(Bool_Tok) { }
+};
 enum Token.name {
 
   LPara_Tok;
@@ -25,7 +34,8 @@ enum Token.name {
   Gte_Tok;
   Lse_Tok;
   Eql_Tok;
-  
   Percent_Tok; //Modulus
+  Or_Tok;
+  And_Tok;
   
-}
+};

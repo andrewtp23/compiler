@@ -2,11 +2,15 @@
 #include "token.hpp"
 
 struct Lexer{
-
+  
   const char* first;
   const char* last;
   std::string buf;
+  
+  Lexer(std::string line) : first(line), last(&line(std::strlen(line))) { }
+  
   bool eof() const { return first == last; };
+  
   char lookahead() const {
 
   if(eof())
@@ -73,6 +77,9 @@ struct Lexer{
 	case "&" :
 	  {
 	  consume();
+	  if(lookahead() == "&")
+			consume();
+			return new Punctuator_Tok()
 	  return new Punctuator_Tok(Amp_Tok);
 	  }
 	case "%" :
@@ -134,7 +141,7 @@ struct Lexer{
 	  {
 	  const char* iter = first;
 	  consume();
-	  while(!eof() && std::digit(lookahead()){
+	  while(!eof() && std::isdigit(lookahead()){
 		std::string str(iter, first);
 		int n = std::stoi(str);
 		return new Int_Tok(Int_Tok, n);
@@ -186,7 +193,7 @@ struct Lexer{
 		std::cout << "Error" << std::endl;
 	}
 	
-  }
+  
 };
 
 
