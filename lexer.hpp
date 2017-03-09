@@ -1,3 +1,5 @@
+
+
 #include "token.hpp"
 #include <string>
 #include <cstring>
@@ -50,27 +52,27 @@ struct lexer{
 	case '(' : 
 	  {
 	  consume();
-	  return new Punctuator_Tok(LPara_Tok);
+	  return new Punctuator_Tok(LPara_Tok, buf);
 	  }
 	case ')' :
 	  {
 	  consume();
-	  return new Punctuator_Tok(RPara_Tok);
+	  return new Punctuator_Tok(RPara_Tok, buf);
 	  }
 	case '+' :
 	  {
 	  consume();
-	  return new Punctuator_Tok(Plus_Tok);
+	  return new Punctuator_Tok(Plus_Tok, buf);
 	  }
 	case '-' :
 	  {
 	  consume();
-	  return new Punctuator_Tok(Minus_Tok);
+	  return new Punctuator_Tok(Minus_Tok, buf);
 	  }
 	case '*' :
 	  {
 	  consume();
-	  return new Punctuator_Tok(Star_Tok);
+	  return new Punctuator_Tok(Star_Tok, buf);
 	  }
 	case '/' :
 	  {
@@ -80,39 +82,39 @@ struct lexer{
 			break;
 			}
 	  else
-	  	return new Punctuator_Tok(Slash_Tok);
+	  	return new Punctuator_Tok(Slash_Tok, buf);
 	  }
 	case '|' :
 	  {
 	  consume();
 		if(lookahead() == '|'){
 			consume();
-			return new Punctuator_Tok(Or_Tok);
+			return new Punctuator_Tok(Or_Tok, buf);
 			}
-	  return new Punctuator_Tok(Pipe_Tok);
+	  return new Punctuator_Tok(Pipe_Tok, buf);
 	  }
 	case '&' :
 	  {
 	  consume();
 	  if(lookahead() == '&')
 			consume();
-			return new Punctuator_Tok(And_Tok);
-	  return new Punctuator_Tok(Amp_Tok);
+			return new Punctuator_Tok(And_Tok, buf);
+	  return new Punctuator_Tok(Amp_Tok, buf);
 	  }
 	case '%' :
 	  {
 	  consume();
-	  return new Punctuator_Tok(Percent_Tok);
+	  return new Punctuator_Tok(Percent_Tok, buf);
 	  }
 	case '!' :
 	  {
 	  consume();
 	  if(lookahead() == '='){
 		consume();
-	  	return new Punctuator_Tok(Neq_Tok);
+	  	return new Punctuator_Tok(Neq_Tok, buf);
 		}
 	  else{
-		return new Punctuator_Tok(Bang_Tok);
+		return new Punctuator_Tok(Bang_Tok, buf);
 		}
 	  }
 	case '<' :
@@ -120,30 +122,30 @@ struct lexer{
 	  consume();
 	  if(lookahead() == '='){
 		consume();
-		return new Punctuator_Tok(Lse_Tok);
+		return new Punctuator_Tok(Lse_Tok, buf);
 	  }
 	  else
-	  	return new Punctuator_Tok(Lss_Tok);
+	  	return new Punctuator_Tok(Lss_Tok, buf);
 	  }
 	case '>' :
 	  {
 	  consume();
 	  if(lookahead() == '='){
 		consume();
-		return new Punctuator_Tok(Gte_Tok);
+		return new Punctuator_Tok(Gte_Tok, buf);
 	  }
 	  else
-	  	return new Punctuator_Tok(Gtr_Tok);
+	  	return new Punctuator_Tok(Gtr_Tok, buf);
 	  }
 	case '=' :
 	  {
 	  consume();
 	  if(lookahead() == '='){
 		consume();
-		return new Punctuator_Tok(Eql_Tok);
+		return new Punctuator_Tok(Eql_Tok, buf);
 	  }
 	  else
-	  	std::cout << "Error" << std::endl;
+	  	std::cout << "Error =" << std::endl;
 	  }
 	case ' ' :
 		ignore();
@@ -176,13 +178,13 @@ struct lexer{
 				return new Bool_Tok(1);
 				}
 			else
-				std::cout << "Error" << std::endl;
+				std::cout << "Error true" << std::endl;
 			}
 		else
-			std::cout << "Error" << std::endl;
+			std::cout << "Error true" << std::endl;
 		}
 	  else
-		std::cout << "Error" << std::endl;
+		std::cout << "Error true" << std::endl;
 	 }
 	
 	case 'f' :
@@ -199,18 +201,19 @@ struct lexer{
 					return new Bool_Tok(0);
 				}
 				else
-					std::cout << "Error" << std::endl;
+					std::cout << "Error e in false" << std::endl;
 			}
 			else
-				std::cout << "Error" << std::endl;
+				std::cout << "Error s in false" << std::endl;
 			}
 		else
-			std::cout << "Error" << std::endl;
+			std::cout << "Error l in false" << std::endl;
 		}
 	  else
-		std::cout << "Error" << std::endl;
+		std::cout << "Error a in false" << std::endl;
 	 }
 	}
 }
 };
+
 

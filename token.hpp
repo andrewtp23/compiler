@@ -1,13 +1,16 @@
 #ifndef token_hpp
 #define token_hpp
+#include <string>
 
 struct Token{
   int name;
+  
 };
 
 struct Punctuator_Tok : Token { 
   int name;
-  Punctuator_Tok(int n) : name(n) {}
+  std::string value;
+  Punctuator_Tok(int n, std::string v) : name(n), value(v) {}
 };
 
 struct Int_Tok : Token{
