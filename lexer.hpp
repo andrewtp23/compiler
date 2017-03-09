@@ -16,11 +16,12 @@ struct lexer{
   
   char lookahead() const {
 
-  if(eof())
-	return 0;
-  else
-	return *first;
-  };
+  	if(eof())
+		return 0;
+  	else
+		return *first;
+  	}
+
 
   void consume() {
 
@@ -36,6 +37,7 @@ struct lexer{
 	return;
     *first++;
   }
+
 
   Token* next(){
 
@@ -78,7 +80,7 @@ struct lexer{
 			break;
 			}
 	  else
-	  return new Punctuator_Tok(Slash_Tok);
+	  	return new Punctuator_Tok(Slash_Tok);
 	  }
 	case '|' :
 	  {
@@ -183,7 +185,7 @@ struct lexer{
 		std::cout << "Error" << std::endl;
 	 }
 	
-	/case 'f' :
+	case 'f' :
 	{
 	  consume();
 	  if(lookahead() == 'a'){
@@ -208,6 +210,6 @@ struct lexer{
 	  else
 		std::cout << "Error" << std::endl;
 	 }
-}
-
+	}
+};
 

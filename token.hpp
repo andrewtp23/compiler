@@ -1,4 +1,5 @@
-
+#ifndef token_hpp
+#define token_hpp
 
 struct Token{
   int name;
@@ -20,6 +21,7 @@ struct Bool_Tok : Token{
 
 	Bool_Tok(int n) : value(n) { }
 };
+
 enum Token_name {
 
   LPara_Tok,
@@ -42,3 +44,5 @@ enum Token_name {
   And_Tok
   
 };
+
+#endif
