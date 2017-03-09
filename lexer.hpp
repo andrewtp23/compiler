@@ -211,5 +211,6 @@ struct lexer{
 		std::cout << "Error" << std::endl;
 	 }
 	}
+}
 };
 
