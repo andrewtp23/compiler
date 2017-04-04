@@ -42,7 +42,7 @@ struct parser {
 		return index == line.size();
 	}
 
-	parser(std::vector<Token*>;
+	parser(std::vector<Token*>);
 
 	expr* express(){
 		return add_express();
