@@ -212,6 +212,8 @@ struct lexer{
 	  else
 		std::cout << "Error a in false" << std::endl;
 	 }
+	default:
+		break;
 	}
 }
 };

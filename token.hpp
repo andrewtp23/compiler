@@ -44,6 +44,8 @@ enum Token_name {
   Percent_Tok, //Modulus
   Or_Tok,
   Neq_Tok,
+  Cond_Tok,
+  Oth_Tok,
   And_Tok
   
 };
