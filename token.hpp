@@ -4,25 +4,16 @@
 
 struct Token{
   int name;
-  
-};
-
-struct Punctuator_Tok : Token { 
-  int name;
   std::string value;
-  Punctuator_Tok(int n, std::string v) : name(n), value(v) {}
+  Token(int n, std::string v) : name(n), value(v) {}
 };
 
-struct Int_Tok : Token{
-	int value;
-
-	Int_Tok(int n) : value(n) { }
+struct Integer_Tok : Token{
+	Integer_Tok(std::string);
 };
 
-struct Bool_Tok : Token{
-	bool value;
-
-	Bool_Tok(int n) : value(n) { }
+struct Boolean_Tok : Token{
+	Boolean_Tok(std::string);
 };
 
 enum Token_name {
@@ -46,8 +37,13 @@ enum Token_name {
   Neq_Tok,
   Cond_Tok,
   Oth_Tok,
-  And_Tok
-  
+  And_Tok,
+  //Data types
+  Int_Tok,
+  Bool_Tok
+
+  //Keywords
+
 };
 
 #endif

@@ -1,5 +1,8 @@
 #include "lexer.hpp"
 #include "token.hpp"
+#include "ast.hpp"
+#include "parser.hpp"
+#include "eval.hpp"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -23,8 +26,15 @@ int main() {
     		{
         		std::cout << vec[i]->name << " " << vec[i] << "\n";
     		}
+
+				parser parse(lex);
+				Expr* express = parse.parse();
+				if(express != nullptr)
+						std::cout << "Eval:" << eval(express) << std::endl;
+				else
+						std::cout << "error cannot be evaluated" << std:: endl;
+
 		std::cout << std::endl;
 
 	}
 }
-

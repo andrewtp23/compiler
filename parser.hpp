@@ -1,5 +1,5 @@
-#ifndef "parser_hpp"
-#define "parser_hpp"
+#ifndef parser_hpp
+#define parser_hpp
 
 #include "ast.hpp"
 #include "lexer.hpp"
@@ -11,13 +11,18 @@ struct parser {
 
 	int index;
 	parser(std::vector<Token *> token) : line(token), index(0) {}
-	Token* match(Token k){
+	Expr* parse(){
+		return express();
+	}
+	std::vector<Token *> line;
+
+	Token* match(Token_name k){
 		if(lookahead() == k)
 			return consume();
 		else
 			std::cout << "Error expected a token" << std::endl;
 	}
-	Token* match_if(Token k){
+	Token* match_if(Token_name k){
 		if(lookahead() == k)
 			return consume();
 		else
@@ -42,21 +47,19 @@ struct parser {
 		return index == line.size();
 	}
 
-	parser(std::vector<Token*>);
-
-	expr* express(){
+	Expr* express(){
 		return cond_express();
 	}
 
-	expr* add_express(){
-		expr* e1 = mul_express();
+	Expr* add_express(){
+		Expr* e1 = mul_express();
 	while(true){
 		if(match_if(Plus_Tok)){
-			expr* e2 = mul_express();
+			Expr* e2 = mul_express();
 			e1 = new Add_expr(e1,e2);
 		}
 		else if(match_if(Minus_Tok)){
-			expr* e2 = mul_express();
+			Expr* e2 = mul_express();
 			e1 = new Sub_expr(e1,e2);
 		}
 		else
@@ -65,19 +68,19 @@ struct parser {
 	return e1;
 	}
 
-	expr* mul_express(){
-		expr* e1 = una_express();
+	Expr* mul_express(){
+		Expr* e1 = una_express();
 	while(true){
 		if(match_if(Star_Tok)){
-			expr* e2 = una_express();
+			Expr* e2 = una_express();
 			e1 = new Mul_expr(e1,e2);
 		}
 		else if(match_if(Slash_Tok)){
-			expr* e2 = una_express();
+			Expr* e2 = una_express();
 			e1 = new Div_expr(e1,e2);
 		}
 		else if(match_if(Percent_Tok)){
-			expr* e2 = una_express();
+			Expr* e2 = una_express();
 			e1 = new Mod_expr(e1,e2);
 		}
 		else
@@ -86,14 +89,14 @@ struct parser {
 	return e1;
 	}
 
-	expr* una_express(){
+	Expr* una_express(){
 		if(match_if(Minus_Tok)){
-			expr* e = una_express();
+			Expr* e = una_express();
 			e = new Neg_expr(e);
 			return e;
 		}
 		else if(match_if(Bang_Tok)){
-			expr* e = una_express();
+			Expr* e = una_express();
 			e = new Not_expr(e);
 			return e;
 		}
@@ -101,33 +104,37 @@ struct parser {
 			return prim_express();
 	}
 
-	expr* prim_express(){
+	Expr* prim_express(){
 		switch(lookahead()) {
 		case Int_Tok:
-			return new Int_expr(consume()->value);
+			return new Int_expr(std::stoi(consume()->value));
 		case LPara_Tok:
 		{
 			consume();
-			expr* e = express();
+			Expr* e = express();
 			match(RPara_Tok);
 			return e;
 		}
-		case Bool_tok:
-			return new Bool_expr(consume()->value);
+		case Bool_Tok:{
+			if(consume()->value == "true")
+				return new Bool_expr(1);
+			else
+				return new Bool_expr(0);
+		}
 		default:
 			break;
 		}
 	}
 
-	expr* equal_express(){
-		expr* e1 = order_express();
+	Expr* equal_express(){
+		Expr* e1 = order_express();
 	while(true){
 		if(match_if(Eql_Tok)){
-			expr* e2 = order_express();
+			Expr* e2 = order_express();
 			e1 = new Eql_expr(e1,e2);
 		}
 		else if(match_if(Neq_Tok)){
-			expr* e2 = order_express();
+			Expr* e2 = order_express();
 			e1 = new Neq_expr(e1,e2);
 		}
 		else
@@ -136,11 +143,11 @@ struct parser {
 	return e1;
 	}
 
-	expr* and_express(){
-		expr* e1 = equal_express();
+	Expr* and_express(){
+		Expr* e1 = equal_express();
 	while(true){
 		if(match_if(And_Tok)){
-			expr* e2 = equal_express();
+			Expr* e2 = equal_express();
 			e1 = new Ae_expr(e1,e2);
 		}
 		else
@@ -149,11 +156,11 @@ struct parser {
 	return e1;
 	}
 
-	expr* or_express(){
-		expr* e1 = and_express();
+	Expr* or_express(){
+		Expr* e1 = and_express();
 	while(true){
-		if(match_if(Oe_Tok)){
-			expr* e2 = and_express();
+		if(match_if(Or_Tok)){
+			Expr* e2 = and_express();
 			e1 = new Oe_expr(e1,e2);
 		}
 		else
@@ -162,24 +169,24 @@ struct parser {
 	return e1;
 	}
 
-	expr* order_express(){
-	expr* e1 = add_express();
+	Expr* order_express(){
+	Expr* e1 = add_express();
 	while(true){
 		if(match_if(Lss_Tok)){
-			expr* e2 = add_express();
+			Expr* e2 = add_express();
 			e1 = new Lss_expr(e1,e2);
 		}
 		else if(match_if(Gtr_Tok)){
-			expr* e2 = add_express();
+			Expr* e2 = add_express();
 			e1 = new Gtr_expr(e1,e2);
 		}
 		else if(match_if(Gte_Tok)){
-			expr* e2 = add_express();
-			e1 = new Gte_expr(e1,e2);
+			Expr* e2 = add_express();
+			e1 = new Grq_expr(e1,e2);
 		}
 		else if(match_if(Lse_Tok)){
-			expr* e2 = add_express();
-			e1 = new Lse_expr(e1,e2);
+			Expr* e2 = add_express();
+			e1 = new Leq_expr(e1,e2);
 		}
 		else
 			break;
@@ -187,13 +194,13 @@ struct parser {
 		return e1;
 	}
 
-	expr* cond_express(){
-		expr* e1 = or_express();
+	Expr* cond_express(){
+		Expr* e1 = order_express();
 		while(true){
-			if(match_if(Cond_Tok){
-				expr* e2 = or_expr();
+			if(match_if(Cond_Tok)){
+				Expr* e2 = order_express();
 				if(match_if(Oth_Tok)){
-					expr* e3 = or_express();
+					Expr* e3 = order_express();
 					e1 = new Cond_expr(e1,e2,e3);
 				}
 			}
