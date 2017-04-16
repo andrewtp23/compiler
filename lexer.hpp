@@ -1,4 +1,5 @@
-
+#ifndef lexer_hpp
+#define lexer_hpp
 
 #include "token.hpp"
 #include <string>
@@ -216,3 +217,5 @@ struct lexer{
 	}
 }
 };
+
+#endif

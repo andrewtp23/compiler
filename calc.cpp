@@ -27,8 +27,8 @@ int main() {
         		std::cout << vec[i]->name << " " << vec[i] << "\n";
     		}
 
-				parser parse(lex);
-				Expr* express = parse.parse();
+				parser p(vec);
+				Expr* express = p.parse();
 				if(express != nullptr)
 						std::cout << "Eval:" << eval(express) << std::endl;
 				else
