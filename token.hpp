@@ -1,20 +1,8 @@
 #ifndef token_hpp
 #define token_hpp
 #include <string>
+#include <unordered_map>
 
-struct Token{
-  int name;
-  std::string value;
-  Token(int n, std::string v) : name(n), value(v) {}
-};
-
-struct Integer_Tok : Token{
-	Integer_Tok(std::string);
-};
-
-struct Boolean_Tok : Token{
-	Boolean_Tok(std::string);
-};
 
 enum Token_name {
 
@@ -38,12 +26,41 @@ enum Token_name {
   Cond_Tok,
   Oth_Tok,
   And_Tok,
+  Eof_Tok,
   //Data types
   Int_Tok,
-  Bool_Tok
+  Bool_Tok,
+  Id_Tok,
 
   //Keywords
+  bool_kw,
+  false_kw,
+  int_kw,
+  true_kw,
+  var_kw
+};
 
+struct Token{
+  int name;
+  std::string value;
+  Token(int n, std::string v) : name(n), value(v) {}
+};
+
+struct Integer_Tok : Token{
+	Integer_Tok(std::string v) : Token(Int_Tok, v) {}
+};
+
+struct Boolean_Tok : Token{
+	Boolean_Tok(std::string v) : Token(Bool_Tok, v) {}
+};
+
+struct id_tok : Token{
+  id_tok(std::string* s) : Token(Id_Tok, s) {}
+
+};
+
+struct keywordtable : std::unordered_map<std::string, Token_name>{
+  keywordtable();
 };
 
 #endif

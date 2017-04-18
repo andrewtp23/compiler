@@ -53,27 +53,27 @@ struct lexer{
 	case '(' :
 	  {
 	  consume();
-	  return new Token(LPara_Tok, buf);
+	  return new Token(LPara_Tok, buf );
 	  }
 	case ')' :
 	  {
 	  consume();
-	  return new Token(RPara_Tok, buf);
+	  return new Token(RPara_Tok, buf );
 	  }
 	case '+' :
 	  {
 	  consume();
-	  return new Token(Plus_Tok, buf);
+	  return new Token(Plus_Tok, buf );
 	  }
 	case '-' :
 	  {
 	  consume();
-	  return new Token(Minus_Tok, buf);
+	  return new Token(Minus_Tok, buf );
 	  }
 	case '*' :
 	  {
 	  consume();
-	  return new Token(Star_Tok, buf);
+	  return new Token(Star_Tok, buf );
 	  }
 	case '/' :
 	  {
@@ -83,39 +83,39 @@ struct lexer{
 			break;
 			}
 	  else
-	  	return new Token(Slash_Tok, buf);
+	  	return new Token(Slash_Tok, buf );
 	  }
 	case '|' :
 	  {
 	  consume();
 		if(lookahead() == '|'){
 			consume();
-			return new Token(Or_Tok, buf);
+			return new Token(Or_Tok, buf );
 			}
-	  return new Token(Pipe_Tok, buf);
+	  return new Token(Pipe_Tok, buf );
 	  }
 	case '&' :
 	  {
 	  consume();
 	  if(lookahead() == '&')
 			consume();
-			return new Token(And_Tok, buf);
-	  return new Token(Amp_Tok, buf);
+			return new Token(And_Tok, buf );
+	  return new Token(Amp_Tok, buf );
 	  }
 	case '%' :
 	  {
 	  consume();
-	  return new Token(Percent_Tok, buf);
+	  return new Token(Percent_Tok, buf );
 	  }
 	case '!' :
 	  {
 	  consume();
 	  if(lookahead() == '='){
 		consume();
-	  	return new Token(Neq_Tok, buf);
+	  	return new Token(Neq_Tok, buf );
 		}
 	  else{
-		return new Token(Bang_Tok, buf);
+		return new Token(Bang_Tok, buf );
 		}
 	  }
 	case '<' :
@@ -123,27 +123,27 @@ struct lexer{
 	  consume();
 	  if(lookahead() == '='){
 		consume();
-		return new Token(Lse_Tok, buf);
+		return new Token(Lse_Tok, buf );
 	  }
 	  else
-	  	return new Token(Lss_Tok, buf);
+	  	return new Token(Lss_Tok, buf );
 	  }
 	case '>' :
 	  {
 	  consume();
 	  if(lookahead() == '='){
 		consume();
-		return new Token(Gte_Tok, buf);
+		return new Token(Gte_Tok, buf );
 	  }
 	  else
-	  	return new Token(Gtr_Tok, buf);
+	  	return new Token(Gtr_Tok, buf );
 	  }
 	case '=' :
 	  {
 	  consume();
 	  if(lookahead() == '='){
 		consume();
-		return new Token(Eql_Tok, buf);
+		return new Token(Eql_Tok, buf );
 	  }
 	  else
 	  	std::cout << "Error =" << std::endl;
