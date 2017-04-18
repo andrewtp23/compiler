@@ -2,6 +2,7 @@
 #define token_hpp
 #include <string>
 #include <unordered_map>
+#include "symbols.hpp"
 
 
 enum Token_name {
@@ -54,10 +55,10 @@ struct Boolean_Tok : Token{
 	Boolean_Tok(std::string v) : Token(Bool_Tok, v) {}
 };
 
-// struct id_tok : Token{
-//   id_tok(std::string* s) : Token(Id_Tok, s) {}
-//
-// };
+struct id_tok : Token{
+  id_tok(std::string* s) : Token(Id_Tok, s) {}
+
+};
 
 struct keywordtable : std::unordered_map<std::string, Token_name>{
   keywordtable();

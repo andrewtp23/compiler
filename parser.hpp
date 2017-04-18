@@ -4,8 +4,6 @@
 #include "ast.hpp"
 #include "lexer.hpp"
 #include <vector>
-#include <map>
-
 
 struct parser {
 
@@ -19,7 +17,7 @@ struct parser {
 	bool eof() const{
 		return index == line.size();
 	}
-	
+
 	Token* match(Token_name k){
 		if(lookahead() == k)
 			return consume();
@@ -107,6 +105,7 @@ struct parser {
 	Expr* prim_express(){
 		switch(lookahead()) {
 		case Int_Tok:
+			std::cout << "here\n";
 			return new Int_expr(std::stoi(consume()->value));
 		case LPara_Tok:
 		{
@@ -122,6 +121,7 @@ struct parser {
 				return new Bool_expr(0);
 		}
 		default:
+			std::cout << "invalid token\n";
 			break;
 		}
 	}

@@ -2,6 +2,7 @@
 #define ast_HPP
 
 #include <cassert>
+#include "symbols.hpp"
 
 struct Bool_type;
 struct Int_type;
@@ -42,6 +43,18 @@ struct Expr {
   virtual void accept(Visitor&) = 0;
   Type* Ty;
 };
+
+struct decl {
+  virtual ~decl() {};
+};
+
+struct var_decl: decl {
+  symbol * name;
+  Type* Ty;
+  Expr* init;
+  var_decl(symbol* n, Type* t) : name(n), Ty(t), init(nullptr) { }
+};
+
 
 struct Expr::Visitor
 {
