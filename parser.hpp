@@ -10,12 +10,16 @@
 struct parser {
 
 	int index;
+	std::vector<Token *> line;
 	parser(std::vector<Token *> token) : line(token), index(0) {}
 	Expr* parse(){
 		return express();
 	}
-	std::vector<Token *> line;
 
+	bool eof() const{
+		return index == line.size();
+	}
+	
 	Token* match(Token_name k){
 		if(lookahead() == k)
 			return consume();
@@ -41,10 +45,6 @@ struct parser {
 			return 0;
 		else
 			return line[index]->name;
-	}
-
-	bool eof() const{
-		return index == line.size();
 	}
 
 	Expr* express(){

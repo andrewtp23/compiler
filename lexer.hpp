@@ -166,52 +166,52 @@ struct lexer{
 		return new Integer_Tok(str);
 		}
 	  }
-	case 't' :
-	{
-	  consume();
-	  if(lookahead() == 'r'){
-		consume();
-		if(lookahead() == 'u'){
-		consume();
-			if(lookahead() == 'e'){
-				consume();
-				return new Boolean_Tok("true");
-				}
-			else
-				std::cout << "Error true" << std::endl;
-			}
-		else
-			std::cout << "Error true" << std::endl;
-		}
-	  else
-		std::cout << "Error true" << std::endl;
-	 }
-
-	case 'f' :
-	{
-	  consume();
-	  if(lookahead() == 'a'){
-		consume();
-		if(lookahead() == 'l'){
-		consume();
-			if(lookahead() == 's'){
-				consume();
-				if(lookahead() == 'e'){
-					consume();
-					return new Boolean_Tok("false");
-				}
-				else
-					std::cout << "Error e in false" << std::endl;
-			}
-			else
-				std::cout << "Error s in false" << std::endl;
-			}
-		else
-			std::cout << "Error l in false" << std::endl;
-		}
-	  else
-		std::cout << "Error a in false" << std::endl;
-	 }
+	// case 't' :
+	// {
+	//   consume();
+	//   if(lookahead() == 'r'){
+	// 	consume();
+	// 	if(lookahead() == 'u'){
+	// 	consume();
+	// 		if(lookahead() == 'e'){
+	// 			consume();
+	// 			return new Boolean_Tok("true");
+	// 			}
+	// 		else
+	// 			std::cout << "Error true" << std::endl;
+	// 		}
+	// 	else
+	// 		std::cout << "Error true" << std::endl;
+	// 	}
+	//   else
+	// 	std::cout << "Error true" << std::endl;
+	//  }
+  //
+	// case 'f' :
+	// {
+	//   consume();
+	//   if(lookahead() == 'a'){
+	// 	consume();
+	// 	if(lookahead() == 'l'){
+	// 	consume();
+	// 		if(lookahead() == 's'){
+	// 			consume();
+	// 			if(lookahead() == 'e'){
+	// 				consume();
+	// 				return new Boolean_Tok("false");
+	// 			}
+	// 			else
+	// 				std::cout << "Error e in false" << std::endl;
+	// 		}
+	// 		else
+	// 			std::cout << "Error s in false" << std::endl;
+	// 		}
+	// 	else
+	// 		std::cout << "Error l in false" << std::endl;
+	// 	}
+	//   else
+	// 	std::cout << "Error a in false" << std::endl;
+	//  }
 	default:
 		break;
 	}
