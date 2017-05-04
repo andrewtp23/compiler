@@ -32,13 +32,18 @@ enum Token_name {
   Int_Tok,
   Bool_Tok,
   Id_Tok,
+  Assign_Tok,
+  LBrack_Tok,
+  RBrack_Tok,
 
   //Keywords
   bool_kw,
   false_kw,
   int_kw,
   true_kw,
-  var_kw
+  var_kw,
+  else_kw,
+  assert_kw
 };
 
 struct Token{

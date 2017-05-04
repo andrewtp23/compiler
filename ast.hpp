@@ -301,4 +301,16 @@ struct Context
   Int_type int_type;
 };
 
+struct Decl{
+	Expr* init;
+	virtual ~Decl() {};
+};
+
+struct var_decl : Decl {
+	symbol* name;
+	Type* ty;
+	var_decl() {}
+	var_decl(symbol* n, Type* t) : name(n), ty(t) { }
+};
+
 #endif
