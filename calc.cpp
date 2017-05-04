@@ -3,6 +3,7 @@
 #include "ast.hpp"
 #include "parser.hpp"
 #include "eval.hpp"
+#incldue "scope.hpp"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -10,11 +11,16 @@
 int main() {
 	std::cout << "working" << std::endl;
 	std::vector<Token*> vec;
+	keyword_table* keywords = new keyword_table();
+	symbol_table* symbols = new symbol_table();
+	std::deque<scope*> scopes;
+	scopes.push_back(new scope());
+	std::deque<scope*> stack;
 	char line[69];
 	while(std::cin.getline(line, 69)){
 		std::cout << line << std::endl;
 
-    		lexer lex = lexer(line);
+    		lexer lex = lexer(line, keywords, symbols);
     		Token *current = lex.next();
     		while (current != nullptr)
     		{
@@ -27,7 +33,7 @@ int main() {
         		std::cout << vec[i]->name << " " << vec[i] << "\n";
     		}
 
-				parser p(vec);
+				parser p(vec, symbols, &stack);
 				Expr* express = p.parse();
 				if(express != nullptr)
 						std::cout << "Eval:" << eval(express) << std::endl;

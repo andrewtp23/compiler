@@ -2,6 +2,7 @@
 #define lexer_hpp
 
 #include "token.hpp"
+#include "symbols.hpp"
 #include <string>
 #include <cstring>
 
@@ -13,7 +14,7 @@ struct lexer{
   const char* last;
   std::string buf;
 
-  lexer(char* line) : first(line), last(&line[std::strlen(line)]) { }
+  lexer(char* line, keyword_table *kw, symbol_table *syms) : first(line), last(&line[std::strlen(line)]), keywords(kw), symbols(syms) { }
 
   bool eof() const { return first == last; };
 
@@ -25,7 +26,14 @@ struct lexer{
 		return *first;
   	}
 
-
+	bool match_letter(char c){
+		return (std::isalpha(c) || c == '_');
+	}
+	
+	bool match_letter_digit(char c){
+		return (std::isdigit(c) || std::isalpha(c) || c == '_');
+	}
+	
   void consume() {
 
     if(eof())
@@ -146,8 +154,16 @@ struct lexer{
 		return new Token(Eql_Tok, buf );
 	  }
 	  else
-	  	std::cout << "Error =" << std::endl;
+	  	return new Token(Assign_Tok, buf);
+	
+		break;
 	  }
+	case '?' :
+	{
+		consume();
+		return new Token(Cond_Tok, buf);
+		break;
+	}
 	case ' ' :
 		ignore();
 		break;
@@ -213,8 +229,28 @@ struct lexer{
 	// 	std::cout << "Error a in false" << std::endl;
 	//  }
 	default:
-		break;
+		if(match_letter(lookahead()))
+			return word();
+		else
+			break;
 	}
+}
+
+Token* word(){
+	consume();
+	while(!eof() && match_letter_digit(lookahead()))
+		consume();
+	
+	auto key = keywords->find(buf);
+	if(key != keywords->end())
+	{
+		Token* ntok = new Token(key->second);
+		return ntok;
+	}
+	
+	symbol* ns = symbols->insert(buf);
+	Token* ntok = new ID_Tok(ns);
+	return ntok;
 }
 };
 
