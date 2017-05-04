@@ -3,15 +3,24 @@
 
 #include "ast.hpp"
 #include "lexer.hpp"
+//#include "eval.hpp"
+#include "symbols.hpp"
+#include "scope.hpp"
 #include <vector>
+#include <deque>
+#include <unordered_map>
+#include <iostream>
 
 struct parser {
 
 	int index;
 	std::vector<Token *> line;
-	parser(std::vector<Token *> token) : line(token), index(0) {}
+	std::deque<scope*> &scope_stack;
+	std::unordered_map<int, std:;string> names;
+	Expr* stmt_seq();
+	parser(std::vector<Token *> token, symbol_table* S, std::deque<scope*> &scopes) : line(token), symbols(S), scope_stack(scopes), index(0) {}
 	Expr* parse(){
-		return express();
+		return stmt_seq();
 	}
 
 	bool eof() const{
@@ -44,48 +53,48 @@ struct parser {
 		else
 			return line[index]->name;
 	}
-	
+
 	Expr* stmt_seq(){
 		return stmt();
 	}
-	
+
 	Expr* stmt(){
 		switch(look_ahead()){
 			case LBrack_Tok:
 				return startblock();
-			
+
 			case RBrack_Tok:
 				return endblock();
-				
+
 			case if_kw:
 				return Cond_stmt();
-				
+
 			case assert_kw:
 				return assertion();
-			
+
 			case var_kw:
 				return decl_stmt()->entity->init;
-				
+
 			case Id_Tok:
 				if(line.size() > 1)
 					if(lin[index + 1]->name == Assign_Tok)
 						return assignment();
-			
+
 			default:
 				return express_stmt()->expression;
 		}
 	}
-	
+
 	Decl_stmt* declare_stmt(){
 		Decl* d = declaration();
 		return new Decl_stmt(d);
 	}
-	
+
 	Expr_stmt* express_stmt(){
 		Expr* e = express();
 		return new Expr_stmt(e);
 	}
-	
+
 	Expr* Cond_stmt(){
 		consume();
 		match_if(LPara_Tok);
@@ -94,16 +103,16 @@ struct parser {
 		Expr* e2 = stmt();
 		match_if(else_kw);
 		Expr* e3 = stmt();
-		
+
 		return new Cond_expr(e1, e2, e3);
 	}
-	
+
 	Expr* startblock(){
 		match_if(LBrack_Tok);
 		scope.push_back(new scope());
 		return nullptr;
 	}
-	
+
 	Expr* endblock(){
 		match_if(RBrack_Tok);
 		scope.pop_back();
@@ -114,7 +123,7 @@ struct parser {
 		symbol *x = identifier();
 		x = symbols->find(*x);
 		match(Assign_Tok);
-		
+
 		for(int i = scope_stack.size() -1; i >= 0; i--){
 			if(scope_stack[i]->find(*x) != nullptr){
 				Decl* v = new Decl();
@@ -125,7 +134,7 @@ struct parser {
 			}
 		}
 	}
-	
+
 	Expr* assertion(){
 		consume();
 		match_if(LPara_Tok);
@@ -134,18 +143,18 @@ struct parser {
 		assert(eval(e));
 		return nullptr;
 	}
-	
+
 	Decl* declar(){
 		switch(look_ahead())
 		{
 			case var_kw:
 				return variable_decl();
-			
+
 			default:
 				break;
 		}
 	}
-	
+
 	Decl* variable_decl()
 		{
 			match_if(var_kw);
@@ -159,23 +168,23 @@ struct parser {
 			scope_stack.back()->insert(*x, v);
 			return v;
 		}
-	
+
 	Type* type_specifier(){
-		switch(look_ahead())
+		switch(lookahead())
 		{
 			case bool_kw:
 				consume();
 				return new Bool_type;
-				
+
 			case int_kw:
 				consume();
 				return new Int_type;
-				
+
 			default:
 				std::cout << "type error" << std::endl;
 		}
 	}
-	
+
 	Expr* express(){
 		return cond_express();
 	}
@@ -340,18 +349,18 @@ struct parser {
 		}
 		return e1;
 	}
-	
+
 	Expr* ID_express(){
 		symbol *x = identifier();
 		x = symbols->find(*x);
-		
+
 		for(int i = scope_stack.size() - 1; i >= 0; i--){
 			Decl* d = scope_stack[i]->find(*x);
 			if(d != nullptr)
 				return d->init;
 		}
 	}
-	
+
 	symbol* identifier(){
 		Token* id(Id_Tok);
 		symbol* s = &id->value;

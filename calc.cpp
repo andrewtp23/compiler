@@ -3,10 +3,11 @@
 #include "ast.hpp"
 #include "parser.hpp"
 #include "eval.hpp"
-#incldue "scope.hpp"
+#include "scope.hpp"
 #include <vector>
 #include <string>
 #include <iostream>
+#include <deque>
 
 int main() {
 	std::cout << "working" << std::endl;

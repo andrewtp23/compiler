@@ -43,6 +43,7 @@ enum Token_name {
   true_kw,
   var_kw,
   else_kw,
+  if_kw,
   assert_kw
 };
 
@@ -50,6 +51,9 @@ struct Token{
   int name;
   std::string value;
   Token(int n, std::string v) : name(n), value(v) {}
+  Token(int) : name(n) {}
+  Token(int n, symbol* s) : name(n), value(*s) {}
+  token() {}
 };
 
 struct Integer_Tok : Token{
@@ -61,7 +65,7 @@ struct Boolean_Tok : Token{
 };
 
 struct id_tok : Token{
-  id_tok(std::string* s) : Token(Id_Tok, s) {}
+  id_tok(symbol* s) : Token(Id_Tok, s) {}
 
 };
 

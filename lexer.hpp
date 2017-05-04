@@ -13,8 +13,10 @@ struct lexer{
   const char* first;
   const char* last;
   std::string buf;
+  const keyword_table* keywords;
+  symbol_table* symbols;
 
-  lexer(char* line, keyword_table *kw, symbol_table *syms) : first(line), last(&line[std::strlen(line)]), keywords(kw), symbols(syms) { }
+  lexer(char* line, keyword_table *keywords, symbol_table *syms) : first(line), last(&line[std::strlen(line)]), keywords(kw), symbols(syms) { }
 
   bool eof() const { return first == last; };
 
@@ -29,11 +31,11 @@ struct lexer{
 	bool match_letter(char c){
 		return (std::isalpha(c) || c == '_');
 	}
-	
+
 	bool match_letter_digit(char c){
 		return (std::isdigit(c) || std::isalpha(c) || c == '_');
 	}
-	
+
   void consume() {
 
     if(eof())
@@ -155,7 +157,7 @@ struct lexer{
 	  }
 	  else
 	  	return new Token(Assign_Tok, buf);
-	
+
 		break;
 	  }
 	case '?' :
@@ -240,14 +242,14 @@ Token* word(){
 	consume();
 	while(!eof() && match_letter_digit(lookahead()))
 		consume();
-	
+
 	auto key = keywords->find(buf);
 	if(key != keywords->end())
 	{
 		Token* ntok = new Token(key->second);
 		return ntok;
 	}
-	
+
 	symbol* ns = symbols->insert(buf);
 	Token* ntok = new ID_Tok(ns);
 	return ntok;

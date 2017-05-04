@@ -10,17 +10,17 @@
  struct symbol_table{
 
    symbol* insert(const std::string& str){
-     auto result = syms.insert({str,nullptr});
+     auto result = symbols.insert({str,nullptr});
      return &result.first->first;
    }
 
    symbol* find(const std::string& str) {
-     auto iter = syms.find(str);
+     auto iter = symbols.find(str);
      return &iter->first;
    }
 
  private:
-    std::unordered_map<std::string, void*> syms;
+    std::unordered_map<std::string, void*> symbols;
  };
 
  #endif
